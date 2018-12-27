@@ -1,0 +1,33 @@
+{
+    "name": "davidecesarano/embryo-csrf",
+    "type": "library",
+    "description": "PHP library that provides a simple way to retrieve strings in various languages.",
+    "keywords": [
+        "php",
+        "psr-15",
+        "translate",
+        "language"
+    ],
+    "homepage": "https://github.com/davidecesarano/embryo-translate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davide Cesarano",
+            "homepage": "https://github.com/davidecesarano"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "davidecesarano/embryo-http": "dev-master",
+        "davidecesarano/embryo-middleware": "dev-master",
+        "davidecesarano/embryo-session": "dev-master",
+        "davidecesarano/embryo-emitter": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Embryo\\": "Embryo/"
+        }
+    }
+}

@@ -1,5 +1,5 @@
 {
-    "name": "davidecesarano/embryo-csrf",
+    "name": "davidecesarano/embryo-translate",
     "type": "library",
     "description": "PHP library that provides a simple way to retrieve strings in various languages.",
     "keywords": [

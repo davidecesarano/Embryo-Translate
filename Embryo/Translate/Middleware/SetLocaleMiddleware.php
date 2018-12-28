@@ -2,6 +2,11 @@
 
     /**
      * SetLocaleMiddleware
+     * 
+     * PSR-15 middleware that stores locale language in session.
+     * 
+     * @author Davide Cesarano <davide.cesarano@unipegaso.it>
+     * @link https://github.com/davidecesarano/embryo-translate
      */
 
     namespace Embryo\Translate\Middleware;
@@ -13,27 +18,71 @@
 
     class SetLocaleMiddleware implements MiddlewareInterface 
     {   
+        /**
+         * @var string $lang
+         */
         private $lang = 'en';
 
-        private $sessionAttribute = 'session';
+        /**
+         * @var string $sessionRequestAttrbiute
+         */
+        private $sessionRequestAttrbiute = 'session';
 
+        /**
+         * @var string $sessionKey
+         */
+        private $sessionKey = 'language';
+
+        /**
+         * @var string $languageQueryParam
+         */
         private $languageQueryParam = 'language';
 
-        public function setLanguage(string $lang)
+        /**
+         * Set language.
+         *
+         * @param string $lang
+         * @return self
+         */
+        public function setLanguage(string $lang): self
         {
             $this->lang = $lang;
             return $this;
         }
 
-        public function setSessionAttrbiute(string $session)
+        /**
+         * Set session in request attibute.
+         *
+         * @param string $sessionRequestAttrbiute
+         * @return void
+         */
+        public function setSessionRequestAttrbiute(string $sessionRequestAttrbiute): self
         {
-            $this->sessionAttribute = $sessionAttribute;
+            $this->sessionRequestAttrbiute = $sessionRequestAttrbiute;
             return $this;
         }
 
-        public function setLanguageQueryParam($languageQueryParam)
+        /**
+         * Set language in request query param.
+         *
+         * @param string $languageQueryParam
+         * @return self
+         */
+        public function setLanguageQueryParam(string $languageQueryParam): self
         {
             $this->languageQueryParam = $languageQueryParam;
+            return $this;
+        }
+
+        /**
+         * Set session key item.
+         *
+         * @param string $sessionKey
+         * @return void
+         */
+        public function setSessionKey(string $sessionKey): self
+        {
+            $this->sessionKey = $sessionKey;
             return $this;
         }
 
@@ -46,15 +95,15 @@
          */
         public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
         {
-            $session = $request->getAttribute($this->sessionAttribute);
+            $session = $request->getAttribute($this->sessionRequestAttrbiute);
             $query   = $request->getQueryParams();
 
             if (isset($query[$this->languageQueryParam])) {
-                $session->set('language', $query[$this->languageQueryParam]);
+                $session->set($this->sessionKey, $query[$this->languageQueryParam]);
             }
 
-            if (!$session->has('language')) {
-                $session->set('language', $this->lang);
+            if (!$session->has($this->sessionKey)) {
+                $session->set($this->sessionKey, $this->lang);
             }
             return $handler->handle($request);
         }   

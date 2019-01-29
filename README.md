@@ -47,7 +47,7 @@ $translate->setMessages();
 Store the default language in `Embryo\Translate\Middleware\SetLocaleMiddleware`. You may also change the active language at runtime using the query parameter in the uri:
 ```php
 //...
-$middleware = new MiddlewareDispatcher;
+$middleware = new RequestHandler;
 
 // session
 $middleware->add(

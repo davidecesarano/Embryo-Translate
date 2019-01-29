@@ -3,7 +3,7 @@
     require __DIR__ . '/../vendor/autoload.php';
         
     use Embryo\Http\Emitter\Emitter;
-    use Embryo\Http\Server\MiddlewareDispatcher;
+    use Embryo\Http\Server\RequestHandler;
     use Embryo\Http\Factory\{ServerRequestFactory, ResponseFactory};
     use Embryo\Session\Session;
     use Embryo\Session\Middleware\SessionMiddleware;
@@ -16,8 +16,9 @@
     
     $request    = (new ServerRequestFactory)->createServerRequestFromServer();
     $response   = (new ResponseFactory)->createResponse(200);
-    $middleware = new MiddlewareDispatcher;
+    $middleware = new RequestHandler;
     $session    = new Session;
+    $emitter    = new Emitter;
     
     class TestTranslateMiddleware implements MiddlewareInterface
     {
@@ -45,5 +46,4 @@
     $middleware->add(TestTranslateMiddleware::class);
     $response = $middleware->dispatch($request, $response);
     
-    $emitter = new Emitter;
     $emitter->emit($response);

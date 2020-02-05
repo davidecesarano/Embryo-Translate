@@ -58,15 +58,20 @@
             $dirs = new FilesystemIterator($this->languagePath);
             foreach ($dirs as $dir) {
                 if ($dir->isDir()) {
+                    $messages[$dir->getFilename()] = [];
                     $langDir = new FilesystemIterator($dir->getPathname());
                     foreach ($langDir as $fileinfo) {
                         if ($fileinfo->getExtension() === 'php') {
-                            $messages[$dir->getFilename()] = require $fileinfo->getPathname();
+                            $content = require $fileinfo->getPathname();
+                            if (is_array($content)) {
+                                $messages[$dir->getFilename()] = array_merge($messages[$dir->getFilename()], $content);
+                            }
                         }
                     }  
                 }
             }
             $this->messages = $messages;
+            print_r($this->messages);
             return $this;
         }
 

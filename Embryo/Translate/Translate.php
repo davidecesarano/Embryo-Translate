@@ -71,7 +71,6 @@
                 }
             }
             $this->messages = $messages;
-            print_r($this->messages);
             return $this;
         }
 
